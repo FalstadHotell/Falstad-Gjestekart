@@ -542,7 +542,7 @@ async function generatePlan(){
   document.getElementById('resultText').innerHTML='<div class="dots"><span></span><span></span><span></span></div>';
 
   try{
-    const resp = await fetch('https://api.anthropic.com/v1/messages',{
+    const resp = await fetch('https://falstad-turplanlegger.gaute-haugan.workers.dev',{
       method:'POST',headers:{'Content-Type':'application/json'},
       body:JSON.stringify({model:'claude-sonnet-4-6',max_tokens:1000,
         system:SYSTEM[lang]||SYSTEM.no, messages:conversationHistory})
@@ -599,7 +599,7 @@ async function sendChat(){
   conversationHistory.push({role:'user',content:text});
   addLoadingBubble();
   try{
-    const resp=await fetch('https://api.anthropic.com/v1/messages',{
+    const resp=await fetch('https://falstad-turplanlegger.gaute-haugan.workers.dev',{
       method:'POST',headers:{'Content-Type':'application/json'},
       body:JSON.stringify({model:'claude-sonnet-4-6',max_tokens:1000,
         system:SYSTEM[lang]||SYSTEM.no, messages:conversationHistory})
