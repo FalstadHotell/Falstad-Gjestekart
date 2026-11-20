@@ -14,6 +14,7 @@ html,body{margin:0;height:100%;background:#181a1c;color:#fff;font-family:Barlow,
 #hud{width:100%;max-width:440px;box-sizing:border-box;padding:6px 10px 3px}
 .row{display:flex;justify-content:space-between;align-items:center;gap:8px;font-family:Roboto,sans-serif;font-weight:700;font-size:14px}
 #fund{font-size:17px}#fund b{color:var(--g)}
+#quit{margin-left:6px;padding:2px 9px;border:0;border-radius:6px;background:#33373b;color:#fff;font:700 13px Roboto,sans-serif;cursor:pointer;vertical-align:3px}#quit.arm{background:#ca5347}
 #time{font-size:18px;color:var(--y);font-variant-numeric:tabular-nums}
 #bar{height:7px;background:#33373b;border-radius:4px;overflow:hidden;margin:4px 0 3px}
 #barfill{height:100%;width:0;background:var(--g);transition:width .3s}
@@ -89,7 +90,7 @@ tr.me td{color:var(--y)}
 <body>
 <div id="app">
   <div id="hud">
-    <div class="row"><span id="fund">Byggefond <b>0 kr</b> / 20 mill</span><span id="time">3:00</span></div>
+    <div class="row"><span id="fund">Byggefond <b>0 kr</b> / 20 mill</span><span><span id="time">3:00</span> <button id="quit" aria-label="Avslutt runden">✖</button></span></div>
     <div id="bar"><div id="barfill"></div></div>
     <div class="row small"><span id="fol">👥 0/6 med på slep</span><span id="who"></span></div>
   </div>
@@ -938,6 +939,10 @@ document.getElementById('go').onclick=start;
 document.getElementById('again').onclick=start;
 document.getElementById('menu').onclick=()=>{document.getElementById('end').classList.remove('on');document.getElementById('start').classList.add('on');document.getElementById('start').scrollTop=0;refresh();};
 initBuilder();teaser();renderAll();refresh();
+{const qb=document.getElementById('quit');let armT=null;qb.onclick=()=>{if(!G||G.over)return;
+  if(!qb.classList.contains('arm')){qb.classList.add('arm');qb.textContent='Avslutte? ✖';armT=setTimeout(()=>{qb.classList.remove('arm');qb.textContent='✖';},2500);return;}
+  clearTimeout(armT);qb.classList.remove('arm');qb.textContent='✖';G.over=true;MSG=null;document.getElementById('quiz').classList.remove('on');
+  document.getElementById('start').classList.add('on');document.getElementById('start').scrollTop=0;refresh();};}
 if(Date.now()>=END||QS.has('boom'))selfDestruct();
 
 /* ---------- Skalering ---------- */
